@@ -125,6 +125,10 @@ function jsSID(bufferlen, background_noise)
     }
     this.playcont = function() {
         jsSID_scriptNode.connect(jsSID_audioCtx.destination);
+        if (jsSID_audioCtx.state === "interrupted" | jsSID_audioCtx.state === "suspended") {
+            jsSID_audioCtx.resume().then(() => play());
+            return;
+        }
     }
     this.pause = function() {
         if (loaded && initialized)
